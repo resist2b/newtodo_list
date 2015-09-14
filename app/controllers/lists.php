@@ -21,14 +21,14 @@ class Lists extends CI_Controller {
 
     public function show_all() {
        $this->db->from('lists');
-        $this->db->join('users', 'lists.list_user_id = users.id');
+//        $this->db->join('users', 'lists.list_user_id = users.id');
         $this->db->join('tasks', 'lists.id = tasks.list_id','left');
         $this->db->where('list_user_id',$this->session->userdata('id'));
         $this->db->group_by('lists.id');
         $lists['lists'] = $this->db->get()->result();
         $app['app_title'] = "Lists";
         $this->load->view('layouts/header', $app);
-        $this->load->view('lists/show_all', $lists);
+        $this->load->view('lists/show_lists', $lists);
         $this->load->view('layouts/footer');
     }
 
@@ -43,10 +43,10 @@ class Lists extends CI_Controller {
 
     public function save_list() {
         $data = [
-            'list_name' => $this->input->post('list_name'),
-            'list_body' => $this->input->post('list_body'),
+            'list_name' => htmlspecialchars($this->input->post('list_name')),
+            'list_body' => htmlspecialchars($this->input->post('list_body')),
             'create_date' => date('Y-m-d H:i:s'),
-            'list_user_id' => $this->session->userdata('id')
+            'list_user_id' => htmlspecialchars($this->session->userdata('id'))
         ];
 
         $this->load->model('List_M');

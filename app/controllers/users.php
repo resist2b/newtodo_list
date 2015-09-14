@@ -42,12 +42,12 @@ class Users extends CI_Controller {
 
     public function save_new_user() {
         $data = [
-            'first_name' => $this->input->post('first_name'),
-            'last_name' => $this->input->post('last_name'),
-            'email' => $this->input->post('email'),
-            'username' => $this->input->post('username'),
-            'password' => md5($this->input->post('password')),
-            'is_admin' => $this->input->post('is_admin'),
+            'first_name' => htmlspecialchars($this->input->post('first_name')),
+            'last_name' => htmlspecialchars($this->input->post('last_name')),
+            'email' => htmlspecialchars($this->input->post('email')),
+            'username' => htmlspecialchars($this->input->post('username')),
+            'password' => htmlspecialchars(md5($this->input->post('password'))),
+            'is_admin' => htmlspecialchars($this->input->post('is_admin')),
             'reg_date' => date('Y-m-d H:i:s'),
         ];
 
