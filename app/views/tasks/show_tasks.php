@@ -27,9 +27,26 @@
                                         
 
                                         <td>
-       <div class="pull-right">  <a href="<?= base_url('tasks/delete').DIRECTORY_SEPARATOR.$task->task_id ?>" class="btn "> <i class="fa fa-remove"></i></a>
+                                            
+                                         
+
+<!--       <div class="pull-right">  <a href="<?= base_url('tasks/delete').DIRECTORY_SEPARATOR.$task->task_id ?>" class="btn "> <i class="fa fa-remove"></i></a>
                               
-         <a href="<?= base_url('tasks/edit').DIRECTORY_SEPARATOR.$task->task_id ?>" class="btn"><i class="fa fa-edit"></i></a></div>
+         <a href="<?= base_url('tasks/edit').DIRECTORY_SEPARATOR.$task->task_id ?>" class="btn"><i class="fa fa-edit"></i></a></div>-->
+         
+            <?= form_open('tasks/updata') ?>
+          <div class="form-group">
+            <input type="hidden" name="task_id" value="<?= $task->id ?>" />
+            <button type="submit" name="submit"  class="btn btn-large btn-success">edit</button>
+        </div>
+          <?= form_close(); ?>
+            <?= form_open('tasks/updata') ?>
+          <div class="form-group">
+            <input type="hidden" name="task_id" value="<?= $task->id ?>" />
+            <button type="submit" name="submit"  class="btn btn-large btn-success">delete</button>
+        </div>
+          <?= form_close(); ?>
+          
           <h2>       <a href="<?= base_url('tasks/show') . DIRECTORY_SEPARATOR . $task->id ?>" target="_blank" ><?= $task->task_name ?></a></h2>
                                             <p><?= $task->list_name ?></p>
                                             <div class="progress">
