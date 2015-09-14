@@ -44,9 +44,8 @@ class Tasks extends CI_Controller {
         $this->load->view('layouts/footer');
     }
 
-    public function edit($id) {
-        $app['app_title'] = "Edit Task";
-        $id = $this->uri->slash_segment(3);
+    public function edit() {
+        $id = $this->input->post('task_id');
 
         $this->db->select('*');
         $this->db->from('tasks');
@@ -54,8 +53,6 @@ class Tasks extends CI_Controller {
         $this->db->join('lists', 'lists.id = tasks.list_id');
         $this->db->group_by('`tasks`.`task_id`');
         $data['task'] = $this->db->get()->result();
-        $data['task'] = $data['task'][0];
-
 
         //get list
         $this->db->select('*');
