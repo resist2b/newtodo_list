@@ -1,9 +1,8 @@
 <?php
-
 error_reporting(E_ALL);
 ini_set('display_errors', TRUE);
 ini_set('display_startup_errors', TRUE);
-date_default_timezone_set('africa/cairo');
+date_default_timezone_set('Africa/Cairo	');
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -11,7 +10,7 @@ class Tasks extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        if (empty($this->session->userdata('first_name'))) {
+        if (!($this->session->userdata('first_name'))) {
             redirect(base_url());
         }
         $this->load->model('Task_M');

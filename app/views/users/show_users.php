@@ -22,6 +22,7 @@
                                     <th>username</th>
                                     <th>reg_date</th>
                                     <th>Admin/User</th>
+                                    <th>last Login</th>
 
                                 </tr>
                             </thead>
@@ -34,6 +35,7 @@
                                         <td><?= $user->username ?></td>
                                         <td><?= $user->reg_date ?></td>
                                         <td><span class="badge"><?= ($user->is_admin == 1 ? 'Admin' : 'User'); ?></span></td>
+                                        <td>date</td>
 
                                     </tr>
                                 <?php endforeach; ?>

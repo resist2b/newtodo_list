@@ -53,8 +53,8 @@
                     </button>
                     <a class="navbar-brand" href="<?= base_url() ?>"><?= $app_title ?> Admin v2.0 - 
                         <?php
-                        if (!empty($this->session->userdata('first_name'))) {
-                            echo 'Welcome ' . ($this->session->userdata('is_admin') == 1 ? 'Admin' : $this->session->userdata('first_name'));
+                        if (($this->session->userdata('first_name'))) {
+             echo 'Welcome ' . ($this->session->userdata('is_admin') == 1 ? 'Admin' : $this->session->userdata('first_name'));
                         }
                         ?></a>
                 </div>
@@ -285,7 +285,7 @@
                                 <!-- /input-group -->
                             </li>
                             <li>
-                                <a href="<?= site_url() ?>home/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                <a href="<?= base_url() ?>home/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-th-list fa-fw"></i>Lists<span class="fa arrow"></span></a>

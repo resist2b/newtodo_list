@@ -10,7 +10,7 @@ class Lists extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        if (empty($this->session->userdata('first_name'))) {
+        if (!($this->session->userdata('first_name'))) {
             redirect(base_url());
         }
     }

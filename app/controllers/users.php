@@ -14,14 +14,14 @@ class Users extends CI_Controller {
     }
 
     public function index() {
-        if (empty($this->session->userdata('is_admin')) && $this->session->userdata('is_admin') != 1) {
+        if (!($this->session->userdata('is_admin')) && $this->session->userdata('is_admin') != 1) {
             redirect(base_url());
         }
         $this->show_all();
     }
 
     public function show_all() {
-        if (empty($this->session->userdata('is_admin')) && $this->session->userdata('is_admin') != 1) {
+        if (!($this->session->userdata('is_admin')) && $this->session->userdata('is_admin') != 1) {
             redirect(base_url());
         }
         $lists['users'] = $this->User_M->get_all();
@@ -71,7 +71,7 @@ class Users extends CI_Controller {
             $this->load->view('reg/footer', $this->data());
         } else {
             $query = $this->User_M->get_by(['username' => $this->input->post('username'), 'password' => $this->input->post('password')]);
-            if (empty($query)) {
+            if (!($query)) {
                 echo "Sorry, The Username and password you entered don't match.";
             } else {
                 $this->set_session();

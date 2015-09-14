@@ -8,10 +8,10 @@ if (!defined('BASEPATH'))
 
 class Home extends CI_Controller {
 
-    public function data() {
-        $data['app_title'] = "New To-Do";
-        return $data;
-    }
+//    public function data() {
+//        $data['app_title'] = "New To-Do";
+//        return $data;
+//    }
 
     public function dashboard() {
         $this->index();
@@ -19,19 +19,20 @@ class Home extends CI_Controller {
 
     public function about() {
         $data['app_title'] = "New To-Do";
-        $this->load->view('reg/header', $this->data());
-        $this->load->view('reg/about', $this->data());
-        $this->load->view('reg/footer', $this->data());
+        $this->load->view('reg/header', $data);
+        $this->load->view('reg/about', $data);
+        $this->load->view('reg/footer', $data);
     }
 
     public function index() {
-        if (empty($this->session->userdata('first_name'))) {
-            $this->load->view('reg/header', $this->data());
-            $this->load->view('reg/login', $this->data());
-            $this->load->view('reg/footer', $this->data());
+         $data['app_title'] = "New To-Do";
+        if (!($this->session->userdata('first_name'))) {
+            $this->load->view('reg/header', $data);
+            $this->load->view('reg/login', $data);
+            $this->load->view('reg/footer', $data);
         } else {
-            $this->load->view('layouts/header', $this->data());
-            $this->load->view('dashboard', $this->data());
+            $this->load->view('layouts/header', $data);
+            $this->load->view('dashboard', $data);
             $this->load->view('layouts/footer');
         }
     }
