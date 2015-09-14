@@ -34,7 +34,7 @@
                                                         'list_id' => $list->list_id,
                                                         'user_id' => $this->session->userdata('id'),
                                                     ));
-                                                    echo $query->num_rows();
+                                                    echo ($query->num_rows()> 0 ? $query->num_rows() : 'No tasks');
                                                     ?>
                                                 </span></a>
                                         </td>
