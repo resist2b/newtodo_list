@@ -20,9 +20,10 @@ class Lists extends CI_Controller {
     }
 
     public function show_all() {
-            $this->db->from('lists');
+       $this->db->from('lists');
         $this->db->join('users', 'lists.list_user_id = users.id');
         $this->db->join('tasks', 'lists.id = tasks.list_id','left');
+        $this->db->where('list_user_id',$this->session->userdata('id'));
         $this->db->group_by('lists.id');
         $lists['lists'] = $this->db->get()->result();
         $app['app_title'] = "Lists";

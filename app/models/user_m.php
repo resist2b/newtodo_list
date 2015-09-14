@@ -22,7 +22,7 @@ class User_M extends My_model {
             'password' => md5($this->input->post('password')),
             'reg_date' => date("d-m-Y"),
         ];
-        if ($this->User->insert($data)) {
+        if ($this->User_M->insert($data)) {
             $this->session->set_flashdata('save', 'User Registered,Now you Can login');
             $this->session->set_flashdata('username', $data['username']);
             redirect(base_url());

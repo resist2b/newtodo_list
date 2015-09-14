@@ -7,7 +7,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-                <?= form_open('lists/save_list'); ?>
+        <?= form_open('lists/save_list'); ?>
         <div class="form-group">
             <label for="list_name"> list_name</label>
             <input class="form-control" type="text" name="list_name" value="" id="task_name" placeholder="Enter list_name" />
@@ -22,7 +22,7 @@
         <div class="form-group">
             <button type="submit" name="submit"  class="btn btn-large btn-success">Add List</button>
         </div>
-                <?= form_close(); ?>
+        <?= form_close(); ?>
     </div>
     <!-- /.row -->
     <!-- /.row -->

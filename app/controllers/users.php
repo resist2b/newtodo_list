@@ -14,20 +14,46 @@ class Users extends CI_Controller {
     }
 
     public function index() {
+        if (empty($this->session->userdata('is_admin')) && $this->session->userdata('is_admin') != 1) {
+            redirect(base_url());
+        }
         $this->show_all();
     }
 
     public function show_all() {
-
+        if (empty($this->session->userdata('is_admin')) && $this->session->userdata('is_admin') != 1) {
+            redirect(base_url());
+        }
         $lists['users'] = $this->User_M->get_all();
-        $app['app_title'] = "Lists";
+        $app['app_title'] = "Users";
         $this->load->view('layouts/header', $app);
         $this->load->view('users/show_users', $lists);
         $this->load->view('layouts/footer');
     }
 
     public function add_new_user() {
-        echo __METHOD__;
+        $app['app_title'] = "Add New User";
+        //get $lists
+        //load form & passing $lists
+        $this->load->view('layouts/header', $app);
+        $this->load->view('users/add_user');
+        $this->load->view('layouts/footer');
+    }
+
+    public function save_new_user() {
+        $data = [
+            'first_name' => $this->input->post('first_name'),
+            'last_name' => $this->input->post('last_name'),
+            'email' => $this->input->post('email'),
+            'username' => $this->input->post('username'),
+            'password' => md5($this->input->post('password')),
+            'is_admin' => $this->input->post('is_admin'),
+            'reg_date' => date('Y-m-d H:i:s'),
+        ];
+
+        $this->load->model('User_M');
+        $this->User_M->insert($data);
+        redirect('users/');
     }
 
     public function data() {
@@ -37,8 +63,8 @@ class Users extends CI_Controller {
 
     public function login() {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|max_length[50]|min_length[5]|xxs_claen');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|max_length[50]|min_length[5]|md5');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|max_length[50]|min_length[4]|xxs_claen');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|max_length[50]|min_length[4]|md5');
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('reg/header', $this->data());
             $this->load->view('reg/login', $this->data());
@@ -95,7 +121,7 @@ class Users extends CI_Controller {
         $this->form_validation->set_rules('first_name', 'first_name', 'trim|required|max_length[50]|min_length[5]|xxs_claen');
         $this->form_validation->set_rules('last_name', 'last_name', 'required');
         $this->form_validation->set_rules('email', 'email', 'trim|required|max_length[50]|min_length[5]|valid_email|is_unique[users.email]');
-        $this->form_validation->set_rules('username', 'username', 'trim|required|max_length[50]|min_length[5]|xxs_claen');
+        $this->form_validation->set_rules('username', 'username', 'trim|required|max_length[50]|min_length[5]|is_unique[users.username]|xxs_claen');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|max_length[50]|min_length[5]|xxs_claen');
         $this->form_validation->set_rules('confirm_password', 'confirm_password', 'trim|required|max_length[50]|min_length[5]|xxs_claen||matches[password]');
         if ($this->form_validation->run() == FALSE) {

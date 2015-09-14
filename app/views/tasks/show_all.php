@@ -27,14 +27,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <?php
-                                $this->db->select('*');
-                                $this->db->from('tasks');
-                                $this->db->join('lists', 'lists.id = tasks.list_id');
-                                $tasks = $this->db->get();
-
-                                foreach ($tasks->result() as $task) :
+                                foreach ($tasks as $task) :
                                     ?>
                                     <!--loop-->
                                     <tr class="odd gradeX">
@@ -44,7 +38,7 @@
                                         <td><?= $task->create_date ?></td>
                                         <td><?= $task->due_date ?></td>
                                         <td><?= $task->is_complete ?></td>
-                                         <td><div class="progress">
+                                        <td><div class="progress">
                                                 <div class="progress-bar" role="progressbar" aria-valuenow="<?= $task->progressbar ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%;">
                                                     <?= $task->progressbar ?>%
                                                 </div>

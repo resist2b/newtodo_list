@@ -54,7 +54,7 @@
                     <a class="navbar-brand" href="<?= base_url() ?>"><?= $app_title ?> Admin v2.0 - 
                         <?php
                         if (!empty($this->session->userdata('first_name'))) {
-                            echo 'Welcome ' . $this->session->userdata('first_name');
+                            echo 'Welcome ' . ($this->session->userdata('is_admin') == 1 ? 'Admin' : $this->session->userdata('first_name'));
                         }
                         ?></a>
                 </div>

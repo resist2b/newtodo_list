@@ -21,7 +21,7 @@
                                     <th>email</th>
                                     <th>username</th>
                                     <th>reg_date</th>
-                                    <th>Rotba</th>
+                                    <th>Admin/User</th>
 
                                 </tr>
                             </thead>

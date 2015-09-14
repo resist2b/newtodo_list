@@ -30,7 +30,10 @@
                                     <tr class="odd gradeX">
                                         <td><?= $list->list_name ?> <a href="#"><span class="badge">
                                                     <?php
-                                                    $query = $this->db->get_where('tasks', array('list_id' => $list->list_id));
+                                                    $query = $this->db->get_where('tasks', array(
+                                                        'list_id' => $list->list_id,
+                                                        'user_id' => $this->session->userdata('id'),
+                                                    ));
                                                     echo $query->num_rows();
                                                     ?>
                                                 </span></a>
