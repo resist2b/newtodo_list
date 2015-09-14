@@ -10,6 +10,8 @@ if (!defined('BASEPATH'))
 class Tasks extends CI_Controller {
 
     public function __construct() {
+
+
         parent::__construct();
         if (!($this->session->userdata('first_name'))) {
             redirect(base_url());
@@ -42,12 +44,45 @@ class Tasks extends CI_Controller {
         $this->load->view('layouts/footer');
     }
 
-    public function edit() {
-        echo __METHOD__;
+    public function edit($id) {
+        $app['app_title'] = "Edit Task";
+        $id = $this->uri->slash_segment(3);
+
+        $this->db->select('*');
+        $this->db->from('tasks');
+        $this->db->where('task_id', $id);
+        $this->db->join('lists', 'lists.id = tasks.list_id');
+        $this->db->group_by('`tasks`.`task_id`');
+        $data['task'] = $this->db->get()->result();
+        $data['task'] = $data['task'][0];
+
+
+        //get list
+        $this->db->select('*');
+        $this->db->from('lists');
+        $data['lists'] = $this->db->get()->result();
+
+
+        $this->db->select('*');
+        $this->db->from('tasks');
+        $this->db->where('`list_id` ', $data['task']->list_id);
+        $data['task_list'] = $this->db->get()->result();
+
+        //load views
+        $this->load->view('layouts/header', $app);
+        $this->load->view('tasks/edit_task', $data);
+        $this->load->view('layouts/footer');
     }
 
-    public function delete() {
-        echo __METHOD__;
+    public function updata() {
+        $id = $this->uri->slash_segment(3);
+        $this->Task_M->update_by($this->input->post('task_id'));
+        redirect('tasks');
+    }
+    public function delete($id) {
+        $id = $this->uri->slash_segment(3);
+        $this->Task_M->delete($id);
+        redirect('tasks');
     }
 
     public function add_new_task() {

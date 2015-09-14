@@ -53,5 +53,13 @@ class Lists extends CI_Controller {
         $this->List_M->insert($data);
         redirect('lists/');
     }
+    
+    
+     public function delete($id) {
+        $id = $this->uri->slash_segment(3);
+         $this->load->model('List_M');
+        $this->List_M->delete($id);
+        redirect('lists');
+    }
 
 }
