@@ -29,6 +29,9 @@ class Tasks extends CI_Controller {
     }
 
     public function show_all() {
+//        $this->load->model('Task_M');
+//        $tasks['tasks'] = $this->Task_M->get_all();
+
         $this->db->select('*');
         $this->db->from('tasks');
         $this->db->where('user_id', $this->session->userdata('id'));
@@ -36,34 +39,34 @@ class Tasks extends CI_Controller {
         $this->db->group_by('`tasks`.`task_id`');
         $tasks['tasks'] = $this->db->get()->result();
         $app['app_title'] = "Tasks";
-        
-        //load views
         $this->load->view('layouts/header', $app);
         $this->load->view('tasks/show_tasks', $tasks);
         $this->load->view('layouts/footer');
     }
 
     public function edit() {
+
+        /* get current task-> $data['task']
+         * get all lists-> $data['lists']
+         * get current task list-> $data['task_list']
+         */
+
+        /* preparing phase */
         $id = $this->input->post('task_id');
         $app['app_title'] = "Edit Task";
-        $this->db->select('*');
-        $this->db->from('tasks');
-        $this->db->where('task_id', $id);
-        $data['task'] = $this->db->get()->result();
-        $data['task'] = $data['task'][0];
-        
-        //get_lists
+        /* 1.Get Current Task  | Short Code using CRUD  */
+        $data['task'] = $this->Task_M->get_by('`task_id` ', $id);
+
+        /* 2.Get all lists | Short Code using CRUD */
         $data['lists'] = $this->Task_M->get_lists();
 
+        /* 3.Get list_name of Current Task  | Short Code using CRUD  */
+        foreach ($data['lists'] as $list) {
 
-        $this->db->select('*');
-        $this->db->from('tasks');
-        $this->db->where('`list_id` ', $data['task']->list_id);
-        $data['task_list'] = $this->db->get()->result();
-
-
-
-
+            if (($list->id) == ($data['task']->list_id)) {
+                $data['task_list_id'] = $list->id;
+            }
+        }
         //load views
         $this->load->view('layouts/header', $app);
         $this->load->view('tasks/edit_task', $data);

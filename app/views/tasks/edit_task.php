@@ -26,7 +26,7 @@
             <select class="form-control" name="list_id">
                 <!--loop-->
                 <?php foreach ($lists as $list) : ?>
-                    <option<?= ($task_list[0]->list_id == $list->id ? ' selected="selected"' : FALSE); ?>  value="<?= $list->id ?>"> <?= $list->list_name ?></option>
+                    <option<?= ($task_list_id == $list->id ? ' selected="selected"' : FALSE); ?>  value="<?= $list->id ?>"> <?= $list->list_name ?></option>
 
                 <?php endforeach; ?>
                 <!--end loop-->
@@ -39,7 +39,7 @@
 
 
                 <!--progressbar-->
-                <option  <?=  ($task->progressbar == $task_list[0]->progressbar ? 'selected="selected"' : FALSE); ?> value="<?= $task->progressbar ?>"><?= $task->progressbar?>%</option>
+                <option  <?=  ($task->progressbar == $task->progressbar ? 'selected="selected"' : FALSE); ?> value="<?= $task->progressbar ?>"><?= $task->progressbar?>%</option>
                 
                 <option value="<?= $task->progressbar ?>" >------------------</option>
                 <option value="0">0%</option>
