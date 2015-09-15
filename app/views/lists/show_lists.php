@@ -18,8 +18,7 @@
                             <thead>
                                 <tr>
                                     <th>List Name</th>
-                                    <th>Description</th>
-                                    <th>Last Add</th>
+                                    <th>Due Today</th>
                                     <th>Actions</th>
 
                                 </tr>
@@ -28,7 +27,7 @@
                                 <?php foreach ($lists as $list) : ?>
                                     <!--loop-->
                                     <tr class="odd gradeX">
-                                        <td><?= $list->list_name ?> <a href="#"><span class="badge">
+                                        <td><h3><?= $list->list_name ?> <a title="working on >show some taks in pop up window" href="#"><span class="badge">
                                                     <?php
                                                     $query = $this->db->get_where('tasks', array(
                                                         'list_id' => $list->list_id,
@@ -36,14 +35,22 @@
                                                     ));
                                                     echo ($query->num_rows() > 0 ? $query->num_rows() : 'No tasks');
                                                     ?>
-                                                </span></a>
+                                                </span></a> </h3> 
+                                            <p><?= $list->list_body ?></p>
                                         </td>
-                                        <td><?= $list->list_body ?></td>
-                                        <td><?= $list->create_date ?></td>
                                         <td>
-     <a href="<?= base_url('lists/delete').DIRECTORY_SEPARATOR.$list->id ?>" class="btn "> <i class="fa fa-remove"></i></a>
-     
-     <a href="<?= base_url('lists/edit') . '/' . $list->list_id ?>" class="btn"><i class="fa fa-edit"></i></a>
+                                            <ul>
+                                                    <li><a href="#" target="_blank" >Due Today Task 1</a></li>
+                                                    <li><a href="#" target="_blank" >Due this week Task </a></li>
+
+                                                </ul>
+
+                                            
+                                        </td>
+                                        <td>
+                                            <a href="<?= base_url('lists/delete') . DIRECTORY_SEPARATOR . $list->id ?>" class="btn "> <i class="fa fa-remove"></i></a>
+
+                                            <a href="<?= base_url('lists/edit') . '/' . $list->list_id ?>" class="btn"><i class="fa fa-edit"></i></a>
                                         </td>
 
                                     </tr>

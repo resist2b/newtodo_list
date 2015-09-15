@@ -11,9 +11,13 @@ class Task_M extends My_model {
     }
 
     public function get_lists() {
-        $this->db->select('*');
-        $this->db->from('lists');
-        return $this->db->get()->result();
+        $this->load->model('List_M');
+        return $this->List_M->get_all();
+    }
+    
+    public function get_lists_by(array $cols) {
+        $this->load->model('List_M');
+        return $this->List_M->get_by($cols);
     }
 
 }

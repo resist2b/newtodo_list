@@ -62,7 +62,6 @@ class Tasks extends CI_Controller {
 
         /* 3.Get list_name of Current Task  | Short Code using CRUD  */
         foreach ($data['lists'] as $list) {
-
             if (($list->id) == ($data['task']->list_id)) {
                 $data['task_list_id'] = $list->id;
             }
@@ -81,10 +80,8 @@ class Tasks extends CI_Controller {
             'list_id' => htmlspecialchars($this->input->post('list_id')),
             'due_date' => htmlspecialchars($this->input->post('due_date')),
             'progressbar' => htmlspecialchars($this->input->post('progressbar')),
-//            'user_id' => htmlspecialchars($this->session->userdata('id')),
-//            'create_date' => date('Y-m-d H:i:s')
+//            'update_date' => date('Y-m-d H:i:s')
         ];
-
 
         $this->Task_M->update($this->input->post('task_id'), $data);
         redirect('tasks');
@@ -97,18 +94,15 @@ class Tasks extends CI_Controller {
 
     public function add_new_task() {
         $app['app_title'] = "Add New Task";
-        //get $lists
-//        $this->load->model('list_M');
-//        $lists['lists'] = $this->list_M->get_all();
+        $id = $this->session->userdata('id');
 
-        $this->db->select('*');
-        $this->db->from('lists');
-        $this->db->where('list_user_id', $this->session->userdata('id'));
-        $lists['lists'] = $this->db->get()->result();
+        /* Get lists of Current user */
+        $this->load->model('List_M');
+        $data['lists'] = $this->List_M->get_many_by('`list_user_id` ', $id);
 
-        //load form & passing $lists
+        /* load form & passing $lists */
         $this->load->view('layouts/header', $app);
-        $this->load->view('tasks/add_task', $lists);
+        $this->load->view('tasks/add_task', $data);
         $this->load->view('layouts/footer');
     }
 
