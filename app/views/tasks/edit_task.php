@@ -32,6 +32,24 @@
                 <!--end loop-->
             </select>
         </div>
+        <div class="form-group">
+            <label for="list_id">progress</label>
+            <select class="form-control" name="progressbar">
+                <!--loop-->
+                <option value="10">10%</option>
+                <option value="200">20%</option>
+                <option value="30">30%</option>
+                <option value="40">40%</option>
+                <option value="50">50%</option>
+                <option value="60">60%</option>
+                <option value="70">70%</option>
+                <option value="80">80%</option>
+                <option value="90">90%</option>
+                <option value="100">100%</option>
+
+                <!--end loop-->
+            </select>
+        </div>
 
         <div class="form-group">
             <label for="due_date">due_date</label>
@@ -42,7 +60,9 @@
         </div>
 
         <div class="form-group">
-            <input type="hidden" name="task_id" value="<?= $task->id ?>" />
+            
+            
+            <input type="hidden" name="task_id" value="<?= $task->task_id ?>" />
             <button type="submit" name="submit"  class="btn btn-large btn-success">Edit Task</button>
         </div>
         <?= form_close(); ?>

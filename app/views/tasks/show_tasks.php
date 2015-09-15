@@ -34,20 +34,22 @@
                               
          <a href="<?= base_url('tasks/edit').DIRECTORY_SEPARATOR.$task->task_id ?>" class="btn"><i class="fa fa-edit"></i></a></div>-->
          
-            <?= form_open('tasks/updata') ?>
-          <div class="form-group">
+            <?= form_open('tasks/delete') ?>
+                                            
+          <div class="form-group pull-right">
             <input type="hidden" name="task_id" value="<?= $task->id ?>" />
-            <button type="submit" name="submit"  class="btn btn-large btn-success">edit</button>
+            <button type="submit" name="submit"  class="btn btn-large btn-danger fa fa-remove"></button>
         </div>
           <?= form_close(); ?>
-            <?= form_open('tasks/updata') ?>
-          <div class="form-group">
-            <input type="hidden" name="task_id" value="<?= $task->id ?>" />
-            <button type="submit" name="submit"  class="btn btn-large btn-success">delete</button>
+            <?= form_open('tasks/edit') ?>
+          <div class="form-group pull-right">
+            <input type="hidden" name="task_id" value="<?= $task->task_id ?>" />
+            <button type="submit" name="submit"  class="btn btn-large btn-success fa fa-edit"></button>
         </div>
           <?= form_close(); ?>
+                                            
           
-          <h2>       <a href="<?= base_url('tasks/show') . DIRECTORY_SEPARATOR . $task->id ?>" target="_blank" ><?= $task->task_name ?></a></h2>
+          <h2>       <a href="<?= base_url('tasks/show') . DIRECTORY_SEPARATOR . $task->task_id ?>" target="_blank" ><?= $task->task_name ?></a></h2>
                                             <p><?= $task->list_name ?></p>
                                             <div class="progress">
                                                 <div class="progress-bar progress-bar-<?= $task->progressbar > 50 ? 'success' : 'danger' ?>" role="progressbar" aria-valuenow="<?= $task->progressbar ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%;">
