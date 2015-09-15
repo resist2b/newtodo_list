@@ -10,8 +10,8 @@
         <?= form_open('tasks/updata') ?>
 
         <div class="form-group">
-            <label for="task_name"> task_name</label>
-            <input class="form-control" type="text" name="task_name" value=" <?= $task->task_name ?>" id="task_name" placeholder="Enter task_name" />
+            <label for="task_name">task_name</label>
+            <input class="form-control" type="text" name="task_name" value="<?= $task->task_name ?>" id="task_name" placeholder="Enter task_name" />
         </div>
 
 
@@ -36,6 +36,13 @@
             <label for="list_id">progress</label>
             <select class="form-control" name="progressbar">
                 <!--loop-->
+
+
+                <!--progressbar-->
+                <option  <?=  ($task->progressbar == $task_list[0]->progressbar ? 'selected="selected"' : FALSE); ?> value="<?= $task->progressbar ?>"><?= $task->progressbar?>%</option>
+                
+                <option value="<?= $task->progressbar ?>" >------------------</option>
+                <option value="0">0%</option>
                 <option value="10">10%</option>
                 <option value="200">20%</option>
                 <option value="30">30%</option>
@@ -60,8 +67,8 @@
         </div>
 
         <div class="form-group">
-            
-            
+
+
             <input type="hidden" name="task_id" value="<?= $task->task_id ?>" />
             <button type="submit" name="submit"  class="btn btn-large btn-success">Edit Task</button>
         </div>

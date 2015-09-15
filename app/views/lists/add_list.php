@@ -7,6 +7,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
+        <div class="col-lg-5">
         <?= form_open('lists/save_list'); ?>
         <div class="form-group">
             <label for="list_name"> list_name</label>
@@ -23,6 +24,7 @@
             <button type="submit" name="submit"  class="btn btn-large btn-success">Add List</button>
         </div>
         <?= form_close(); ?>
+    </div>
     </div>
     <!-- /.row -->
     <!-- /.row -->

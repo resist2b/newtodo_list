@@ -7,6 +7,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
+        <div class="col-lg-5">
         <?= form_open('tasks/save_task') ?>
         <div class="form-group">
             <label for="task_name"> task_name</label>
@@ -42,6 +43,7 @@
             <button type="submit" name="submit"  class="btn btn-large btn-success">Add Task</button>
         </div>
         <?= form_close(); ?>
+</div>
 </div>
 <!-- /.row -->
 <!-- /.row -->

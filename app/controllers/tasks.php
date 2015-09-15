@@ -29,9 +29,6 @@ class Tasks extends CI_Controller {
     }
 
     public function show_all() {
-//        $this->load->model('Task_M');
-//        $tasks['tasks'] = $this->Task_M->get_all();
-
         $this->db->select('*');
         $this->db->from('tasks');
         $this->db->where('user_id', $this->session->userdata('id'));
@@ -39,6 +36,8 @@ class Tasks extends CI_Controller {
         $this->db->group_by('`tasks`.`task_id`');
         $tasks['tasks'] = $this->db->get()->result();
         $app['app_title'] = "Tasks";
+        
+        //load views
         $this->load->view('layouts/header', $app);
         $this->load->view('tasks/show_tasks', $tasks);
         $this->load->view('layouts/footer');
@@ -52,17 +51,18 @@ class Tasks extends CI_Controller {
         $this->db->where('task_id', $id);
         $data['task'] = $this->db->get()->result();
         $data['task'] = $data['task'][0];
-
-        //get list
-        $this->db->select('*');
-        $this->db->from('lists');
-        $data['lists'] = $this->db->get()->result();
+        
+        //get_lists
+        $data['lists'] = $this->Task_M->get_lists();
 
 
         $this->db->select('*');
         $this->db->from('tasks');
         $this->db->where('`list_id` ', $data['task']->list_id);
         $data['task_list'] = $this->db->get()->result();
+
+
+
 
         //load views
         $this->load->view('layouts/header', $app);
@@ -81,15 +81,14 @@ class Tasks extends CI_Controller {
 //            'user_id' => htmlspecialchars($this->session->userdata('id')),
 //            'create_date' => date('Y-m-d H:i:s')
         ];
-        
+
 
         $this->Task_M->update($this->input->post('task_id'), $data);
         redirect('tasks');
     }
 
-    public function delete($id) {
-        $id = $this->uri->slash_segment(3);
-        $this->Task_M->delete($id);
+    public function delete() {
+        $this->Task_M->delete($this->input->post('task_id'));
         redirect('tasks');
     }
 

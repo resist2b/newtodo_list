@@ -37,7 +37,7 @@
             <?= form_open('tasks/delete') ?>
                                             
           <div class="form-group pull-right">
-            <input type="hidden" name="task_id" value="<?= $task->id ?>" />
+            <input type="hidden" name="task_id" value="<?= $task->task_id ?>" />
             <button type="submit" name="submit"  class="btn btn-large btn-danger fa fa-remove"></button>
         </div>
           <?= form_close(); ?>
