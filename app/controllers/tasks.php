@@ -29,44 +29,42 @@ class Tasks extends CI_Controller {
     }
 
     public function show_all() {
-//        $this->load->model('Task_M');
-//        $tasks['tasks'] = $this->Task_M->get_all();
+        /* preparing phase */
+        $app['app_title'] = "Tasks";
+        $id = $this->session->userdata('id');
 
+        /* Get data from 3 tables using join */
         $this->db->select('*');
         $this->db->from('tasks');
-        $this->db->where('user_id', $this->session->userdata('id'));
-        $this->db->join('lists', 'lists.id = tasks.list_id');
-        $this->db->group_by('`tasks`.`task_id`');
-        $tasks['tasks'] = $this->db->get()->result();
-        $app['app_title'] = "Tasks";
+        $this->db->join('users', 'tasks.user_id = users.id');
+        $this->db->join('lists', 'tasks.list_id = lists.id');
+        $this->db->where('tasks.user_id', $id);
+        $data['tasks'] = $this->db->get()->result();
+
+//load views
         $this->load->view('layouts/header', $app);
-        $this->load->view('tasks/show_tasks', $tasks);
+        $this->load->view('tasks/show_tasks', $data);
         $this->load->view('layouts/footer');
     }
 
     public function edit() {
-
-        /* get current task-> $data['task']
-         * get all lists-> $data['lists']
-         * get current task list-> $data['task_list']
-         */
-
         /* preparing phase */
         $id = $this->input->post('task_id');
         $app['app_title'] = "Edit Task";
-        /* 1.Get Current Task  | Short Code using CRUD  */
-        $data['task'] = $this->Task_M->get_by('`task_id` ', $id);
 
-        /* 2.Get all lists | Short Code using CRUD */
+        /* Get all lists */
         $data['lists'] = $this->Task_M->get_lists();
+        /* Get all data about this taks 
+         * i want to replace this code with CRUD One :)
+         */
+        $this->db->select('*');
+        $this->db->from('tasks');
+        $this->db->where('tasks.task_id', $id);
+        $this->db->join('lists', 'tasks.list_id = lists.id');
+        $data['task'] = $this->db->get()->result();
+        $data['task'] = $data['task'][0];
 
-        /* 3.Get list_name of Current Task  | Short Code using CRUD  */
-        foreach ($data['lists'] as $list) {
-            if (($list->id) == ($data['task']->list_id)) {
-                $data['task_list_id'] = $list->id;
-            }
-        }
-        //load views
+        /* load views */
         $this->load->view('layouts/header', $app);
         $this->load->view('tasks/edit_task', $data);
         $this->load->view('layouts/footer');
@@ -80,6 +78,7 @@ class Tasks extends CI_Controller {
             'list_id' => htmlspecialchars($this->input->post('list_id')),
             'due_date' => htmlspecialchars($this->input->post('due_date')),
             'progressbar' => htmlspecialchars($this->input->post('progressbar')),
+                /* i want to create update_date */
 //            'update_date' => date('Y-m-d H:i:s')
         ];
 
@@ -93,11 +92,13 @@ class Tasks extends CI_Controller {
     }
 
     public function add_new_task() {
-        $app['app_title'] = "Add New Task";
+        $app['app_title'] = "Add Task";
         $id = $this->session->userdata('id');
 
-        /* Get lists of Current user */
+        /* Get lists of Current user order_by('id','DESC')
+         */
         $this->load->model('List_M');
+        $this->List_M->order_by('id', 'DESC');
         $data['lists'] = $this->List_M->get_many_by('`list_user_id` ', $id);
 
         /* load form & passing $lists */

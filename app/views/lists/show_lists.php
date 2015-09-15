@@ -48,7 +48,7 @@
                                             
                                         </td>
                                         <td>
-                                            <a href="<?= base_url('lists/delete') . DIRECTORY_SEPARATOR . $list->id ?>" class="btn "> <i class="fa fa-remove"></i></a>
+                                            <a title="show pop up confirmation msg"href="<?= base_url('lists/delete') . DIRECTORY_SEPARATOR . $list->id ?>" class="btn "> <i class="fa fa-remove"></i></a>
 
                                             <a href="<?= base_url('lists/edit') . '/' . $list->list_id ?>" class="btn"><i class="fa fa-edit"></i></a>
                                         </td>

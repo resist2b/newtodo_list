@@ -26,7 +26,7 @@
             <select class="form-control" name="list_id">
                 <!--loop-->
                 <?php foreach ($lists as $list) : ?>
-                    <option<?= ($task_list_id == $list->id ? ' selected="selected"' : FALSE); ?>  value="<?= $list->id ?>"> <?= $list->list_name ?></option>
+                    <option<?= ($task->list_id == $list->id ? ' selected="selected"' : FALSE); ?>  value="<?= $list->id ?>"> <?= $list->list_name ?></option>
 
                 <?php endforeach; ?>
                 <!--end loop-->

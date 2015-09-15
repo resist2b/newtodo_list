@@ -20,10 +20,10 @@ class Lists extends CI_Controller {
     }
 
     public function show_all() {
-       $this->db->from('lists');
+        $this->db->from('lists');
 //        $this->db->join('users', 'lists.list_user_id = users.id');
-        $this->db->join('tasks', 'lists.id = tasks.list_id','left');
-        $this->db->where('list_user_id',$this->session->userdata('id'));
+        $this->db->join('tasks', 'lists.id = tasks.list_id', 'left');
+        $this->db->where('list_user_id', $this->session->userdata('id'));
         $this->db->group_by('lists.id');
         $lists['lists'] = $this->db->get()->result();
         $app['app_title'] = "Lists";
@@ -51,13 +51,19 @@ class Lists extends CI_Controller {
 
         $this->load->model('List_M');
         $this->List_M->insert($data);
+
+        /* conditional redirect 
+         * if i add new list after page refresh my new list be in front of all lists :)
+         */
+        if ($this->input->post('send_from') == 'tasks/add_new_task') {
+            redirect($this->input->post('send_from'));
+        }
         redirect('lists/');
     }
-    
-    
-     public function delete($id) {
+
+    public function delete($id) {
         $id = $this->uri->slash_segment(3);
-         $this->load->model('List_M');
+        $this->load->model('List_M');
         $this->List_M->delete($id);
         redirect('lists');
     }
