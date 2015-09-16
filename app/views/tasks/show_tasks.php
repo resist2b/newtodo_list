@@ -1,7 +1,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><?= $app_title ?></h1>
+            <h1 class="page-header"><?= $page_title ?></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -38,27 +38,61 @@
                                             </div>
                                             <?= form_close(); ?>
 
-                                            <h2><a title="Working on this feature" href="<?= base_url('tasks/show') . DIRECTORY_SEPARATOR . $task->task_id ?>" target="_blank" ><?= $task->task_name ?></a> <span style="font-size: 16px;"><a href="#"><span title="Working on this feature"class="badge">Due 2 days</span></a></span></h2>
-                                            <p><?= $task->list_name ?></p>
-                                            <div class="progress progress-striped">
-                                                <div class="progress-bar active <?php 
-                                                switch ($task->progressbar) {
-                                                    case $task->progressbar >= 80:
-                                                        echo 'progress-bar-success';
-                                                        break;
-                                                    case $task->progressbar >= 50:
-                                                        echo 'progress-bar-warning';
-                                                        break;
-                                                    case $task->progressbar >= 30:
-                                                        echo 'progress-bar-info';
-                                                        break;
+                                            <h3><a title="Working on this feature" href="<?= base_url('tasks/show') . DIRECTORY_SEPARATOR . $task->task_id ?>" target="_blank" ><?= $task->task_name ?></a></h3>
+                                            <p><?= $task->list_name ?> Task</p>
+                                               
+                                            <span class="pull-left" style="width: 40em">
+                                                
+                                                 <?php if ($task->progressbar == 0): ?>
+<div>Just <b>Work</b> and assign <b>completion percentage</b></div>
+ <?php elseif ($task->progressbar >=80): ?>
+   <div class="progress progress-striped"><div class="progress-bar active progress-bar-success" role="progressbar" aria-valuenow="<?= $task->progressbar ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%;"><?= $task->progressbar ?>%</div></div>
+ <?php elseif ($task->progressbar >=50): ?>
+   <div class="progress progress-striped"><div class="progress-bar active  progress-bar-warning" role="progressbar" aria-valuenow="<?= $task->progressbar ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%;"><?= $task->progressbar ?>%</div></div>
+ <?php elseif ($task->progressbar >=10): ?>
+   <div class="progress progress-striped"><div class="progress-bar active progress-bar-info " role="progressbar" aria-valuenow="<?= $task->progressbar ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%;"><?= $task->progressbar ?>%</div></div>
+<?php endif; ?>
+                                            </span>
+                                            <div class="pull-right "> <span class="text-muted">Due on:<?php  echo substr($task->due_date, 0,10);   ?></span> <span title="Working on this feature"class="badge ">
+<?php 
+       
+        $due_date = new DateTime('now');
 
-                                                    default:
-                                                         echo 'progress-bar-danger';
-                                                       break;
-                                                }?>" role="progressbar" aria-valuenow="<?= $task->progressbar ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%;"><?= $task->progressbar ?>%</div>
+        $since_start = $due_date->diff(new DateTime($task->due_date));
+//        echo $since_start->y . ' years<br>';
+//        echo $since_start->m . ' months<br>';
+//echo ($since_start->days > 1 ?   'Due '.$since_start->days.' days' :'Due '.$since_start->days.' day' );
+
+if ($since_start->days == 0 && $since_start->h == 0 && $since_start->i == 0) {
+    echo '<span class="text-danger">Voided task</span>';
+}
+elseif ($since_start->days < 1 && $since_start->h == 0) {
+    echo ' '.$since_start->i.' minutes';
+}
+elseif ($since_start->days < 1 && $since_start->h > 0) {
+    echo ' '.$since_start->h.' hours and '.$since_start->i.' minutes';
+}
+elseif ($since_start->days == 1) {
+    echo ' Tomorrow';
+}
+//elseif ($since_start->days > 1 ) {
+//    echo 'Due '.$since_start->h.' and '.$since_start->i;
+//}
+ elseif ($since_start->days > 1) {
+    echo ' '.$since_start->days.' Days, '.$since_start->h.' Hours';
+}
+ else {
+    echo ' '.$since_start->days.' Day';
+}
+//        echo $since_start->d . ' days<br>';
+//        echo $since_start->h . ' hours<br>';
+//        echo $since_start->i . ' minutes<br>';
+//        echo $since_start->s . ' seconds<br>';
+?>
+                                                            
+                                                        </span></a></span></div>
                                                    
-                                            </div>
+                                            
 
 
                                         </td>

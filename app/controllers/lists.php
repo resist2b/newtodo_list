@@ -8,6 +8,8 @@ if (!defined('BASEPATH'))
 
 class Lists extends CI_Controller {
 
+    public $app = "Moataz TODO List";
+
     public function __construct() {
         parent::__construct();
         if (!($this->session->userdata('first_name'))) {
@@ -20,20 +22,25 @@ class Lists extends CI_Controller {
     }
 
     public function show_all() {
+        $this->app.= " | Lists";
+        $app['app_title'] = $this->app;
+        $app['page_title'] = "Lists";
+
         $this->db->from('lists');
 //        $this->db->join('users', 'lists.list_user_id = users.id');
         $this->db->join('tasks', 'lists.id = tasks.list_id', 'left');
         $this->db->where('list_user_id', $this->session->userdata('id'));
         $this->db->group_by('lists.id');
         $lists['lists'] = $this->db->get()->result();
-        $app['app_title'] = "Lists";
         $this->load->view('layouts/header', $app);
         $this->load->view('lists/show_lists', $lists);
         $this->load->view('layouts/footer');
     }
 
     public function add_new_list() {
-        $app['app_title'] = "Add New List";
+        $this->app.= " | Add List";
+        $app['app_title'] = $this->app;
+        $app['page_title'] = "Add List";
         //get $lists
         //load form & passing $lists
         $this->load->view('layouts/header', $app);
@@ -41,16 +48,31 @@ class Lists extends CI_Controller {
         $this->load->view('layouts/footer');
     }
 
+    public function check_validation() {
+        $this->form_validation->set_rules('list_name', 'list_name', 'strip_tagstrim|xxs_claen|trim|required|min_length[5]|xss_clean');
+        $this->form_validation->set_rules('list_body', 'list_body', 'strip_tagstrim|xxs_claen|trim|required|min_length[5]|xss_clean');
+
+        if ($this->form_validation->run() == true) {
+            redirect($this->save_list());
+        } else {
+//            $this->load->view('form_validation');
+            echo 'cannot save list';
+        }
+    }
+
     public function save_list() {
+
         $data = [
             'list_name' => htmlspecialchars($this->input->post('list_name')),
             'list_body' => htmlspecialchars($this->input->post('list_body')),
-            'create_date' => date('Y-m-d H:i:s'),
-            'list_user_id' => htmlspecialchars($this->session->userdata('id'))
+            'create_date' => htmlspecialchars(date('Y-m-d H:i:s')),
+            'list_user_id' => $this->session->userdata('id')
         ];
+
 
         $this->load->model('List_M');
         $this->List_M->insert($data);
+
 
         /* conditional redirect 
          * if i add new list after page refresh my new list be in front of all lists :)

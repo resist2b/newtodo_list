@@ -9,6 +9,8 @@ if (!defined('BASEPATH'))
 
 class Tasks extends CI_Controller {
 
+    public $app = "Moataz TODO List";
+
     public function __construct() {
 
 
@@ -30,7 +32,9 @@ class Tasks extends CI_Controller {
 
     public function show_all() {
         /* preparing phase */
-        $app['app_title'] = "Tasks";
+        $this->app.= " | Tasks";
+        $app['app_title'] = $this->app;
+        $app['page_title'] = "Tasks";
         $id = $this->session->userdata('id');
 
         /* Get data from 3 tables using join */
@@ -49,8 +53,11 @@ class Tasks extends CI_Controller {
 
     public function edit() {
         /* preparing phase */
+        
+         $this->app.= " | Edit Task";
+        $app['app_title'] = $this->app;
+        $app['page_title'] = "Edit task";
         $id = $this->input->post('task_id');
-        $app['app_title'] = "Edit Task";
 
         /* Get all lists */
         $data['lists'] = $this->Task_M->get_lists();
@@ -92,7 +99,10 @@ class Tasks extends CI_Controller {
     }
 
     public function add_new_task() {
-        $app['app_title'] = "Add Task";
+        $this->app.= " | Add task";
+        $app['app_title'] = $this->app;
+        $app['page_title'] = "Add task";
+
         $id = $this->session->userdata('id');
 
         /* Get lists of Current user order_by('id','DESC')
@@ -114,7 +124,7 @@ class Tasks extends CI_Controller {
             'list_id' => htmlspecialchars($this->input->post('list_id')),
             'due_date' => htmlspecialchars($this->input->post('due_date')),
             'user_id' => htmlspecialchars($this->session->userdata('id')),
-            'create_date' => date('Y-m-d H:i:s')
+            'create_date' => date('Y-m-d h:i:s')
         ];
         $this->Task_M->insert($data);
         redirect('tasks/');

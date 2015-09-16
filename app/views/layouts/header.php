@@ -39,6 +39,7 @@
     </head>
 
     <body>
+        
 
         <div id="wrapper">
 
@@ -51,13 +52,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?= base_url() ?>"><?= $app_title ?> Admin v2.0 - 
-                        <?php
-                        if (($this->session->userdata('first_name'))) {
-             echo 'Welcome ' . ($this->session->userdata('is_admin') == 1 ? 'Admin' : $this->session->userdata('first_name'));
-                        }
-                        ?></a>
+<a class="navbar-brand" href="<?= base_url() ?>"><?= $app_title ?> | Admin v2.0 |<span><?php
+ if (($this->session->userdata('first_name'))) {echo ' Welcome ' . ($this->session->userdata('is_admin') == 1 ? 'Admin' : $this->session->userdata('first_name'));}?>
+                            </span> </a>
+                   
                 </div>
+
                 <!-- /.navbar-header -->
 
                 <ul class="nav navbar-top-links navbar-right">
@@ -267,12 +267,16 @@
                         <!-- /.dropdown-user -->
                     </li>
                     <!-- /.dropdown -->
+
+
                 </ul>
                 <!-- /.navbar-top-links -->
-
                 <div class="navbar-default sidebar" role="navigation">
+
                     <div class="sidebar-nav navbar-collapse">
+
                         <ul class="nav" id="side-menu">
+
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
                                     <input type="text" class="form-control" placeholder="Search...">

@@ -118,12 +118,12 @@ class Users extends CI_Controller {
     }
 
     public function chech_reg() {
-        $this->form_validation->set_rules('first_name', 'first_name', 'trim|required|max_length[50]|min_length[5]|xxs_claen');
-        $this->form_validation->set_rules('last_name', 'last_name', 'required');
-        $this->form_validation->set_rules('email', 'email', 'trim|required|max_length[50]|min_length[5]|valid_email|is_unique[users.email]');
-        $this->form_validation->set_rules('username', 'username', 'trim|required|max_length[50]|min_length[5]|is_unique[users.username]|xxs_claen');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|max_length[50]|min_length[5]|xxs_claen');
-        $this->form_validation->set_rules('confirm_password', 'confirm_password', 'trim|required|max_length[50]|min_length[5]|xxs_claen||matches[password]');
+        $this->form_validation->set_rules('first_name', 'first_name', 'strip_tagstrim|xxs_claen|trim|required|max_length[50]|min_length[5]|xxs_claen');
+        $this->form_validation->set_rules('last_name', 'last_name', 'strip_tagstrim|xxs_claen|required');
+        $this->form_validation->set_rules('email', 'email', 'strip_tagstrim|xxs_claen|trim|required|max_length[50]|min_length[5]|valid_email|is_unique[users.email]');
+        $this->form_validation->set_rules('username', 'username', 'strip_tagstrim|xxs_claen|trim|required|max_length[50]|min_length[5]|is_unique[users.username]|xxs_claen');
+        $this->form_validation->set_rules('password', 'Password', 'strip_tagstrim|xxs_claen|required|max_length[50]|min_length[5]|xxs_claen');
+        $this->form_validation->set_rules('confirm_password', 'confirm_password', 'strip_tagstrim|xxs_claen|trim|required|max_length[50]|min_length[5]|xxs_claen||matches[password]');
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('reg/header', $this->data());
             $this->load->view('reg/reg', $this->data());
