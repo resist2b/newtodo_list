@@ -6,6 +6,9 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
+<script src="<?= base_url() ?>assets/js/tooltip.js"></script>
+<!-- bootbox -->
+<script src="<?= base_url() ?>assets/js/bootbox.min.js"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
 <script src="<?= base_url() ?>assets/js/metisMenu.min.js"></script>
@@ -26,20 +29,36 @@
         $('#dataTables-example').DataTable({
             responsive: true
         });
-        
-  //datepicker
-  
+
+        //datepicker
 
 
-$('.datepicker').datepicker();
-$(".datepicker").on("changeDate", function(event) {
-    $("#my_hidden_input").val(
-        $(".datepicker").datepicker('getFormattedDate')
-     )
-});
 
-  //edn datepicker
+        $('.datepicker').datepicker();
+        $(".datepicker").on("changeDate", function (event) {
+            $("#my_hidden_input").val(
+                    $(".datepicker").datepicker('getFormattedDate')
+                    )
+        });
 
+        //edn datepicker
+
+//http://bootsnipp.com/snippets/featured/bootstrap-snipp-for-datatable
+        $("#mytable #checkall").click(function () {
+            if ($("#mytable #checkall").is(':checked')) {
+                $("#mytable input[type=checkbox]").each(function () {
+                    $(this).prop("checked", true);
+                });
+
+            } else {
+                $("#mytable input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+
+        $("[data-toggle=tooltip]").tooltip();
+        // end of  //http://bootsnipp.com/snippets/featured/bootstrap-snipp-for-datatable
     });
 </script>
 

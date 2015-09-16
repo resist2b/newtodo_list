@@ -53,7 +53,6 @@
                                             <a href="<?= base_url('lists/edit') . '/' . $list->list_id ?>" class="btn"><i class="fa fa-edit"></i></a>
                                         </td>
 
-                                    </tr>
                                 <?php endforeach; ?>
                                 <!--end loop-->
                             </tbody>

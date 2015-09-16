@@ -11,9 +11,13 @@
         <div class="col-lg-12">
 
             <?php foreach ($tasks as $task) : ?>
+          
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="row">
+                            
+                           
+        
 
 <!--                            <div class="col-lg-10 col-xs-7"><h1><a title="Working on this feature" href="<?= base_url('tasks/show') . DIRECTORY_SEPARATOR . $task->task_id ?>" target="_blank" ><?= $task->task_name ?></a> </h1></div>-->
                             <div class="col-lg-10 col-xs-7"><h1><?= $task->task_name ?> </h1></div>
@@ -22,7 +26,8 @@
                                 <div class="pull-right">
                                     <?= form_open('tasks/edit') ?>
                                     <input type="hidden" name="task_id" value="<?= $task->task_id ?>" />
-                                    <button  title="edit task" type="submit" name="submit"  class="btn btn-large btn-success fa fa-edit"></button>
+                                    <button  title="edit task" type="submit" name="submit"  class=" btn btn-large btn-success fa fa-edit"></button>
+                                    
                                     <?= form_close(); ?>
                                 </div>
                                 <div class=""><?= form_open('tasks/delete') ?>
@@ -49,7 +54,8 @@
                         <?php elseif ($task->progressbar >= 10): ?>
                             <div class="progress progress-striped"><div class="progress-bar active progress-bar-info " role="progressbar" aria-valuenow="<?= $task->progressbar ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%;"><?= $task->progressbar ?>%</div></div>
                         <?php endif; ?>
- <span class="label label-default"><?= $task->list_name ?></span>
+ 
+ <a href="#" target="_blank" ><span class="label label-default"><?= $task->list_name ?></span></a>
                             <?php
                             $seconds = strtotime($task->due_date) - strtotime(date('m/d/Y'));
                             $days = floor($seconds / 86400);
