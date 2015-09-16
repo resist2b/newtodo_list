@@ -40,10 +40,24 @@
 
                                             <h2><a title="Working on this feature" href="<?= base_url('tasks/show') . DIRECTORY_SEPARATOR . $task->task_id ?>" target="_blank" ><?= $task->task_name ?></a> <span style="font-size: 16px;"><a href="#"><span title="Working on this feature"class="badge">Due 2 days</span></a></span></h2>
                                             <p><?= $task->list_name ?></p>
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-<?= $task->progressbar > 50 ? 'success' : 'danger' ?>" role="progressbar" aria-valuenow="<?= $task->progressbar ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%;">
-                                                    <?= $task->progressbar ?>%
-                                                </div>
+                                            <div class="progress progress-striped">
+                                                <div class="progress-bar active <?php 
+                                                switch ($task->progressbar) {
+                                                    case $task->progressbar >= 80:
+                                                        echo 'progress-bar-success';
+                                                        break;
+                                                    case $task->progressbar >= 50:
+                                                        echo 'progress-bar-warning';
+                                                        break;
+                                                    case $task->progressbar >= 30:
+                                                        echo 'progress-bar-info';
+                                                        break;
+
+                                                    default:
+                                                         echo 'progress-bar-danger';
+                                                       break;
+                                                }?>" role="progressbar" aria-valuenow="<?= $task->progressbar ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%;"><?= $task->progressbar ?>%</div>
+                                                   
                                             </div>
 
 

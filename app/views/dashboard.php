@@ -99,7 +99,7 @@
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Alert Styles
+                    <i class="text-muted fa fa-dashboard fa-fw"></i>Pending TODOs
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -119,12 +119,13 @@
                 <!-- .panel-body -->
             </div>
             <!-- /.panel -->
+           
         </div>
         <!-- /.col-lg-6 -->
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Dismissable Alerts
+                    <i class="text-success fa fa-trophy fa-fw"></i>Done TODOs
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -141,6 +142,31 @@
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
                     </div>
                     <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
+                    </div>
+                </div>
+                <!-- .panel-body -->
+            </div>
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <i class="text-danger fa fa-trophy fa-fw"></i>Voided TODOs
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
+                    </div>
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
+                    </div>
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
+                    </div>
+                    <div class="alert alert-danger">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
                     </div>
