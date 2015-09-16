@@ -52,9 +52,10 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-<a class="navbar-brand" href="<?= base_url() ?>"><?= $app_title ?> | Admin v2.0 |<span><?php
+<!--<a class="navbar-brand" href="<?= base_url() ?>"><?= $app_title ?> | Admin v2.0 |<span><?php
  if (($this->session->userdata('first_name'))) {echo ' Welcome ' . ($this->session->userdata('is_admin') == 1 ? 'Admin' : $this->session->userdata('first_name'));}?>
-                            </span> </a>
+                            </span> </a>-->
+<a class="navbar-brand" href="<?= base_url() ?>">Moataz TODO List</a>
                    
                 </div>
 

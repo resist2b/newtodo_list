@@ -12,7 +12,7 @@
                             echo form_open('users/chech_reg', $attributes);
                             ?>
                             <fieldset>   
-                                
+                               
                                 <div class="form-group">
                                     <label for="first_name">First Name</label>
                                     <input class="form-control" placeholder="First Name" id="first_name" name="first_name" type="text" autofocus>

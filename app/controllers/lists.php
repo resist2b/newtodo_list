@@ -48,7 +48,7 @@ class Lists extends CI_Controller {
         $this->load->view('layouts/footer');
     }
 
-    public function check_validation() {
+    public function validation_list() {
         $this->form_validation->set_rules('list_name', 'list_name', 'strip_tagstrim|xxs_claen|trim|required|min_length[5]|xss_clean');
         $this->form_validation->set_rules('list_body', 'list_body', 'strip_tagstrim|xxs_claen|trim|required|min_length[5]|xss_clean');
 

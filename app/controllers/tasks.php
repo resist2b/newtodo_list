@@ -117,6 +117,9 @@ class Tasks extends CI_Controller {
         $this->load->view('layouts/footer');
     }
 
+    
+    
+    
     public function save_task() {
         $data = [
             'task_name' => htmlspecialchars($this->input->post('task_name')),
@@ -124,7 +127,7 @@ class Tasks extends CI_Controller {
             'list_id' => htmlspecialchars($this->input->post('list_id')),
             'due_date' => htmlspecialchars($this->input->post('due_date')),
             'user_id' => htmlspecialchars($this->session->userdata('id')),
-            'create_date' => date('Y-m-d h:i:s')
+            'create_date' => date('d/m/Y')
         ];
         $this->Task_M->insert($data);
         redirect('tasks/');
