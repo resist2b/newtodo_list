@@ -43,6 +43,8 @@ class Tasks extends CI_Controller {
         $this->db->join('users', 'tasks.user_id = users.id');
         $this->db->join('lists', 'tasks.list_id = lists.id');
         $this->db->where('tasks.user_id', $id);
+        /* order_by due_date .. to work on this tasks */
+        $this->db->order_by('tasks.due_date');
         $data['tasks'] = $this->db->get()->result();
 
 //load views
@@ -51,10 +53,44 @@ class Tasks extends CI_Controller {
         $this->load->view('layouts/footer');
     }
 
+    public function show_list_tasks() {
+        /* preparing phase */
+
+        $user_id = $this->session->userdata('id');
+        $list_id = $this->uri->slash_segment(3);
+        ;
+
+        /* Get data from 3 tables using join */
+        $this->db->select('*');
+        $this->db->from('tasks');
+        $this->db->where('tasks.user_id', $user_id);
+        $this->db->where('tasks.list_id', $list_id);
+        $this->db->join('users', 'tasks.user_id = users.id');
+        $this->db->join('lists', 'tasks.list_id = lists.id');
+        $data['tasks'] = $this->db->get()->result();
+
+        if (!$data['tasks']) {
+//            redirect('tasks');
+            echo 'no taks found , add new task ?';
+            echo '<a href="' . base_url('tasks/add_new_task') . '" >Add New task</a>';
+            die();
+        }
+
+        $this->app.= " | show_list_tasks";
+        $app['app_title'] = $this->app;
+        $app['page_title'] = $data['tasks'][0]->list_name . " tasks";
+        $data['list_name'] = $data['tasks'][0]->list_name;
+
+//load views
+        $this->load->view('layouts/header', $app);
+        $this->load->view('tasks/show_list_tasks', $data);
+        $this->load->view('layouts/footer');
+    }
+
     public function edit() {
         /* preparing phase */
-        
-         $this->app.= " | Edit Task";
+
+        $this->app.= " | Edit Task";
         $app['app_title'] = $this->app;
         $app['page_title'] = "Edit task";
         $id = $this->input->post('task_id');
@@ -117,9 +153,6 @@ class Tasks extends CI_Controller {
         $this->load->view('layouts/footer');
     }
 
-    
-    
-    
     public function save_task() {
         $data = [
             'task_name' => htmlspecialchars($this->input->post('task_name')),

@@ -27,7 +27,7 @@
                                 <?php foreach ($lists as $list) : ?>
                                     <!--loop-->
                                     <tr class="odd gradeX">
-                                        <td><h3><?= $list->list_name ?> <a title="working on >show some taks in pop up window" href="#"><span class="badge">
+                                        <td><h3><?= $list->list_name ?> <a target="_blank" href=" <?= base_url('tasks/show_list_tasks').DIRECTORY_SEPARATOR.$list->id ?>"><span class="badge">
                                                     <?php
                                                     $query = $this->db->get_where('tasks', array(
                                                         'list_id' => $list->list_id,

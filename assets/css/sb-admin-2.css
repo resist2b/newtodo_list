@@ -357,3 +357,8 @@ table.dataTable thead .sorting:after {
 .form-inline .form-group {
     margin: 2px;}
 
+
+
+.form_edit_del form{
+    padding-bottom: 5px;
+}
