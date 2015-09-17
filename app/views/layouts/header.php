@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,7 +44,6 @@
 
         <div id="wrapper">
 
-            <!-- Navigation -->
             <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -55,14 +52,10 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-<!--<a class="navbar-brand" href="<?= base_url() ?>"><?= $app_title ?> | Admin v2.0 |<span><?php
- if (($this->session->userdata('first_name'))) {echo ' Welcome ' . ($this->session->userdata('is_admin') == 1 ? 'Admin' : $this->session->userdata('first_name'));}?>
-                            </span> </a>-->
 <a class="navbar-brand" href="<?= base_url() ?>">Moataz TODO List</a>
                    
                 </div>
 
-                <!-- /.navbar-header -->
 
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown">
@@ -113,78 +106,36 @@
                                 </a>
                             </li>
                         </ul>
-                        <!-- /.dropdown-messages -->
                     </li>
-                    <!-- /.dropdown -->
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-tasks">
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <p>
-                                            <strong>Task 1</strong>
-                                            <span class="pull-right text-muted">40% Complete</span>
-                                        </p>
-                                        <div class="progress progress-striped active">
-                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                <span class="sr-only">40% Complete (success)</span>
+                             <?php foreach ($navbar_top_tasks as $task): ?>
+                                <?php
+                                $due_date = new DateTime($task->due_date);
+                                $current_data = new DateTime(date("Y-m-d h:i:s"));
+                                $diff = date_diff($current_data, $due_date);
+                                $days = $diff->format("%R%a");
+                                ?>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <p>
+                                                <strong><?= $task->task_name ?></strong>
+                                                <span class="pull-right text-muted">Due <?= $days ?> Days</span>
+                                            </p>
+                                            <div class="progress progress-striped active">
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%">
+                                                    <span ><?= $task->progressbar ?>% Complete</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <p>
-                                            <strong>Task 2</strong>
-                                            <span class="pull-right text-muted">20% Complete</span>
-                                        </p>
-                                        <div class="progress progress-striped active">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                                <span class="sr-only">20% Complete</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <p>
-                                            <strong>Task 3</strong>
-                                            <span class="pull-right text-muted">60% Complete</span>
-                                        </p>
-                                        <div class="progress progress-striped active">
-                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                                <span class="sr-only">60% Complete (warning)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <p>
-                                            <strong>Task 4</strong>
-                                            <span class="pull-right text-muted">80% Complete</span>
-                                        </p>
-                                        <div class="progress progress-striped active">
-                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                                <span class="sr-only">80% Complete (danger)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+<?php endforeach; ?>
                             <li>
                                 <a class="text-center" href="<?= base_url('tasks') ?>">
                                     <strong>See All Tasks</strong>
@@ -192,9 +143,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <!-- /.dropdown-tasks -->
                     </li>
-                    <!-- /.dropdown -->
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -252,9 +201,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <!-- /.dropdown-alerts -->
                     </li>
-                    <!-- /.dropdown -->
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -268,13 +215,10 @@
                             <li><a href="<?php echo base_url('users/logout') ?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
-                        <!-- /.dropdown-user -->
                     </li>
-                    <!-- /.dropdown -->
 
 
                 </ul>
-                <!-- /.navbar-top-links -->
                 <div class="navbar-default sidebar" role="navigation">
 
                     <div class="sidebar-nav navbar-collapse">
@@ -290,7 +234,6 @@
                                         </button>
                                     </span>
                                 </div>
-                                <!-- /input-group -->
                             </li>
                             <li>
                                 <a href="<?= base_url() ?>home/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
@@ -306,7 +249,6 @@
                                     </li>
 
                                 </ul>
-                                <!--/.nav-second-level--> 
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-tasks fa-fw"></i>Tasks<span class="fa arrow"></span></a>
@@ -319,7 +261,6 @@
                                     </li>
 
                                 </ul>
-                                <!--/.nav-second-level--> 
                             </li>
 
                             <?php if (($this->session->userdata('is_admin'))): ?>
@@ -334,84 +275,9 @@
                                         </li>
 
                                     </ul>
-                                    <!--/.nav-second-level--> 
                                 </li>
                             <?php endif; ?>
-                            <!--                            <li>
-                                                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                                                        </li>-->
-                            <!--                            <li>
-                                                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                                                        </li>-->
-                            <!--                            <li>
-                                                            <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                                                            <ul class="nav nav-second-level">
-                                                                <li>
-                                                                    <a href="panels-wells.html">Panels and Wells</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="buttons.html">Buttons</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="notifications.html">Notifications</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="typography.html">Typography</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="icons.html"> Icons</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="grid.html">Grid</a>
-                                                                </li>
-                                                            </ul>
-                                                             /.nav-second-level 
-                                                        </li>-->
-                            <!--                            <li>
-                                                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                                                            <ul class="nav nav-second-level">
-                                                                <li>
-                                                                    <a href="#">Second Level Item</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#">Second Level Item</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#">Third Level <span class="fa arrow"></span></a>
-                                                                    <ul class="nav nav-third-level">
-                                                                        <li>
-                                                                            <a href="#">Third Level Item</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">Third Level Item</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">Third Level Item</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">Third Level Item</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                     /.nav-third-level 
-                                                                </li>
-                                                            </ul>
-                                                             /.nav-second-level 
-                                                        </li>-->
-                            <!--                            <li>
-                                                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                                                            <ul class="nav nav-second-level">
-                                                                <li>
-                                                                    <a href="blank.html">Blank Page</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="login.html">Login Page</a>
-                                                                </li>
-                                                            </ul>
-                                                             /.nav-second-level 
-                                                        </li>-->
                         </ul>
                     </div>
-                    <!-- /.sidebar-collapse -->
                 </div>
-                <!-- /.navbar-static-side -->
             </nav>

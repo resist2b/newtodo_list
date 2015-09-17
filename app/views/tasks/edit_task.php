@@ -7,6 +7,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
+        <div class="col-lg-12">
         <?= form_open('tasks/updata') ?>
 
         <div class="form-group">
@@ -44,7 +45,7 @@
                 <option value="<?= $task->progressbar ?>" >------------------</option>
                 <option value="0">0%</option>
                 <option value="10">10%</option>
-                <option value="200">20%</option>
+                <option value="20">20%</option>
                 <option value="30">30%</option>
                 <option value="40">40%</option>
                 <option value="50">50%</option>

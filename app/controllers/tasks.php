@@ -10,8 +10,7 @@ if (!defined('BASEPATH'))
 class Tasks extends CI_Controller {
 
     public $app = "Moataz TODO List";
-    public $timestamp ;
-
+    public $timestamp;
 
     public function __construct() {
         $this->timestamp = date('Y-m-d G:i:s');
@@ -33,24 +32,42 @@ class Tasks extends CI_Controller {
         echo 'edit task >> switch it to completed,change completion percentage';
     }
 
+    /**
+     * Get last 4 navbar_top_tasks
+     * @return type
+     */
+    public function navbar_top_tasks() {
+
+        $this->db->select('*');
+        $this->db->from('tasks');
+        $user_id = $this->session->userdata('id');
+        $this->db->where('tasks.user_id', $user_id);
+        $this->db->limit(4);
+        $this->db->order_by('tasks.due_date', 'desc');
+        return $this->db->get()->result();
+    }
+
     public function show_all() {
+
         /* preparing phase */
         $this->app.= " | Tasks";
-        $app['app_title'] = $this->app;
-        $app['page_title'] = "Tasks";
-        $id = $this->session->userdata('id');
+        $data['app_title'] = $this->app;
+        $data['page_title'] = "Tasks";
+        $user_id = $this->session->userdata('id');
+        /* Get last 4 navbar_top_task */
+        $data['navbar_top_tasks'] = $this->navbar_top_tasks();
 
         /* Get data from 3 tables using join */
         $this->db->select('*');
         $this->db->from('tasks');
         $this->db->join('users', 'tasks.user_id = users.id');
         $this->db->join('lists', 'tasks.list_id = lists.id');
-        $this->db->where('tasks.user_id', $id);
+        $this->db->where('tasks.user_id', $user_id);
         /* order_by due_date .. to work on this tasks */
         $this->db->order_by('tasks.due_date');
         $data['tasks'] = $this->db->get()->result();
         /* load views */
-        $this->load->view('layouts/header', $app);
+        $this->load->view('layouts/header', $data);
         $this->load->view('tasks/show_tasks', $data);
         $this->load->view('layouts/footer');
     }
@@ -60,7 +77,10 @@ class Tasks extends CI_Controller {
 
         $user_id = $this->session->userdata('id');
         $list_id = $this->uri->slash_segment(3);
-        ;
+        
+        /* Get last 4 navbar_top_task */
+        $data['navbar_top_tasks'] = $this->navbar_top_tasks();
+        
 
         /* Get data from 3 tables using join */
         $this->db->select('*');
@@ -79,13 +99,13 @@ class Tasks extends CI_Controller {
         }
 
         $this->app.= " | show_list_tasks";
-        $app['app_title'] = $this->app;
-        $app['page_title'] = $data['tasks'][0]->list_name . " tasks";
+        $data['app_title'] = $this->app;
+        $data['page_title'] = $data['tasks'][0]->list_name . " tasks";
         $data['list_name'] = $data['tasks'][0]->list_name;
 
         /* load views */
-        $this->load->view('layouts/header', $app);
-        $this->load->view('tasks/show_list_tasks', $data);
+        $this->load->view('layouts/header', $data);
+        $this->load->view('tasks/show_tasks', $data);
         $this->load->view('layouts/footer');
     }
 
@@ -160,7 +180,7 @@ class Tasks extends CI_Controller {
             'task_name' => htmlspecialchars($this->input->post('task_name')),
             'task_body' => htmlspecialchars($this->input->post('task_body')),
             'list_id' => htmlspecialchars($this->input->post('list_id')),
-            'due_date' =>htmlspecialchars($this->input->post('due_date')),
+            'due_date' => htmlspecialchars($this->input->post('due_date')),
             'user_id' => htmlspecialchars($this->session->userdata('id')),
             'create_date' => $this->timestamp
         ];

@@ -11,15 +11,15 @@
         <div class="col-lg-12">
 
 
-            <?php foreach ($tasks as $task) : ?>
                 <!-- calculate the difference between $task->due_date And Current Data using TIMESTAMP? -->
-
+            <?php foreach ($tasks as $task) : ?>
                 <?php
                 $due_date = new DateTime($task->due_date);
                 $current_data = new DateTime(date("Y-m-d h:i:s"));
                 $diff = date_diff($current_data, $due_date);
                 $days =  $diff->format("%R%a");
                 ?>
+
                 <div class="panel panel-<?= ($days < 0 ? 'danger' : 'default'); ?>    ">
                     <div class="panel-heading">
                         <div class="row">
