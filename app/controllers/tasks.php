@@ -10,8 +10,11 @@ if (!defined('BASEPATH'))
 class Tasks extends CI_Controller {
 
     public $app = "Moataz TODO List";
+    public $timestamp ;
+
 
     public function __construct() {
+        $this->timestamp = date('Y-m-d G:i:s');
 
 
         parent::__construct();
@@ -46,8 +49,7 @@ class Tasks extends CI_Controller {
         /* order_by due_date .. to work on this tasks */
         $this->db->order_by('tasks.due_date');
         $data['tasks'] = $this->db->get()->result();
-
-//load views
+        /* load views */
         $this->load->view('layouts/header', $app);
         $this->load->view('tasks/show_tasks', $data);
         $this->load->view('layouts/footer');
@@ -81,7 +83,7 @@ class Tasks extends CI_Controller {
         $app['page_title'] = $data['tasks'][0]->list_name . " tasks";
         $data['list_name'] = $data['tasks'][0]->list_name;
 
-//load views
+        /* load views */
         $this->load->view('layouts/header', $app);
         $this->load->view('tasks/show_list_tasks', $data);
         $this->load->view('layouts/footer');
@@ -158,9 +160,9 @@ class Tasks extends CI_Controller {
             'task_name' => htmlspecialchars($this->input->post('task_name')),
             'task_body' => htmlspecialchars($this->input->post('task_body')),
             'list_id' => htmlspecialchars($this->input->post('list_id')),
-            'due_date' => htmlspecialchars($this->input->post('due_date')),
+            'due_date' =>htmlspecialchars($this->input->post('due_date')),
             'user_id' => htmlspecialchars($this->session->userdata('id')),
-            'create_date' => date('d/m/Y')
+            'create_date' => $this->timestamp
         ];
         $this->Task_M->insert($data);
         redirect('tasks/');

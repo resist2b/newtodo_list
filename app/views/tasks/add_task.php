@@ -1,7 +1,10 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><?= $page_title ?></h1>
+            <h1 class="page-header"><?= $page_title ?>
+            
+            </h1>
+            
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -32,10 +35,12 @@
             </div>
 
             <div class="form-group">
-                <label for="due_date">due_date</label>
-                <div class="input-group date">
-                    <input  class="form-control datepicker" name="due_date" type="text" >
-                    <div class="input-group-addon"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></div>
+                <label for="datetimepicker1">Due Date</label>
+                <div class='input-group date' id='datetimepicker1'>
+                    <input name="due_date" type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                 </div>
             </div>
 

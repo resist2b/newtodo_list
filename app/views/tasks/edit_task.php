@@ -58,13 +58,24 @@
             </select>
         </div>
 
-        <div class="form-group">
+<!--        <div class="form-group">
             <label for="due_date">due_date</label>
             <div class="input-group date">
                 <input  class="form-control datepicker" value="<?= $task->due_date ?>" name="due_date" type="text" >
                 <div class="input-group-addon"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></div>
             </div>
-        </div>
+        </div>-->
+        
+        
+         <div class="form-group">
+                <label for="datetimepicker1">Due Date</label>
+                <div class='input-group date' id='datetimepicker1'>
+                    <input value="<?= $task->due_date ?>"  name="due_date" type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
 
         <div class="form-group">
 

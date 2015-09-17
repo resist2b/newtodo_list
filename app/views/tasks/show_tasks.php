@@ -12,28 +12,27 @@
 
 
             <?php foreach ($tasks as $task) : ?>
+                <!-- calculate the difference between $task->due_date And Current Data using TIMESTAMP? -->
 
                 <?php
-                $seconds = strtotime($task->due_date) - strtotime(date('m/d/Y'));
-                $days = floor($seconds / 86400);
-                $hours = floor(($seconds - ($days * 86400)) / 3600);
-                $minutes = floor(($seconds - ($days * 86400) - ($hours * 3600)) / 60);
-                $seconds = floor(($seconds - ($days * 86400) - ($hours * 3600) - ($minutes * 60)));
+                $due_date = new DateTime($task->due_date);
+                $current_data = new DateTime(date("Y-m-d h:i:s"));
+                $diff = date_diff($current_data, $due_date);
+                $days =  $diff->format("%R%a");
                 ?>
-
-                <div class="panel panel-<?= ($days <= 2 ? 'danger' : 'default'); ?>    ">
+                <div class="panel panel-<?= ($days < 0 ? 'danger' : 'default'); ?>    ">
                     <div class="panel-heading">
                         <div class="row">
 
 
 
 
-        <!--                            <div class="col-lg-10 col-xs-7"><h1><a title="Working on this feature" href="<?= base_url('tasks/show') . DIRECTORY_SEPARATOR . $task->task_id ?>" target="_blank" ><?= $task->task_name ?></a> </h1></div>-->
+                        <!--                            <div class="col-lg-10 col-xs-7"><h1><a title="Working on this feature" href="<?= base_url('tasks/show') . DIRECTORY_SEPARATOR . $task->task_id ?>" target="_blank" ><?= $task->task_name ?></a> </h1></div>-->
                             <div class="col-lg-10 col-xs-7"><h3><?= $task->task_name ?> </h3></div>
 
                             <div class="col-lg-2 col-xs-5">  
                                 <div class="pull-right form_edit_del">
-                                     <?= form_open('tasks/edit') ?>
+                                    <?= form_open('tasks/edit') ?>
                                     <input type="hidden" name="task_id" value="<?= $task->task_id ?>" />
                                     <button  title="edit task" type="submit" name="submit"  class=" btn btn-large btn-success fa fa-edit"></button>
 
@@ -55,7 +54,8 @@
                         <p><?= $task->task_body ?></p>
                         <div class="pull-right ">
                             <?php if ($task->progressbar == 0): ?>
-                                <div class="progress progress-striped"><div class="progress-bar active progress-bar-danger" role="progressbar" aria-valuenow="<?= $task->progressbar ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%;"><?= $task->progressbar ?>%</div></div>
+<span class="label label-primary">Work && Edit ME :)</span>                            
+                                    
                             <?php elseif ($task->progressbar >= 80): ?>
                                 <div class="progress progress-striped"><div class="progress-bar active progress-bar-success" role="progressbar" aria-valuenow="<?= $task->progressbar ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $task->progressbar ?>%;"><?= $task->progressbar ?>%</div></div>
                             <?php elseif ($task->progressbar >= 50): ?>
@@ -68,13 +68,13 @@
 
 
                             <?php if ($days < 0): ?>
-                                <span class="label label-danger">OVERDUE</span>
+                            <span class="label label-danger">OVERDUE <?= $diff->format("%R%a days") ?></span>
                             <?php elseif ($days == 0) : ?>
                                 <span class="label label-warning">Due Today</span>
                             <?php elseif ($days == 1) : ?>
                                 <span class="label label-warning">Due Tomorrow</span>
                             <?php elseif ($days > 0) : ?>
-                                <span class="label label-info">Due <?= $days ?> Days</span>
+                                <span title=" <?= 'working' ?>" class="label label-info">Due <?= $days ?> Days</span>
 
 
                             <?php endif; ?>

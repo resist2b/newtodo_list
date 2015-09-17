@@ -22,6 +22,9 @@
 
         <!-- DataTables Responsive CSS -->
         <link href="<?= base_url() ?>assets/css/dataTables.responsive.css" rel="stylesheet">
+        
+        <!-- Bootstrap 3 Datepicker -->
+        <link href="<?= base_url() ?>assets/css/bootstrap-datetimepicker.css" rel="stylesheet">
 
         <!-- Custom CSS -->
         <link href="<?= base_url() ?>assets/css/sb-admin-2.css" rel="stylesheet">
