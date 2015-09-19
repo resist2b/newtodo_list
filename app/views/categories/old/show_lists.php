@@ -27,13 +27,13 @@
                                 <?php foreach ($lists as $list) : ?>
                                     <!--loop-->
                                     <tr class="odd gradeX">
-                                        <td><h3><?= $list->list_name ?> <a target="_blank" href=" <?= base_url('tasks/show_list_tasks').DIRECTORY_SEPARATOR.$list->id ?>"><span class="badge">
+                                        <td><h3><?= $list->list_name ?> <a target="_blank" href=" <?= base_url('todos/show_list_todos').DIRECTORY_SEPARATOR.$list->list_id ?>"><span class="badge">
                                                     <?php
-                                                    $query = $this->db->get_where('tasks', array(
+                                                    $query = $this->db->get_where('todos', array(
                                                         'list_id' => $list->list_id,
                                                         'user_id' => $this->session->userdata('id'),
                                                     ));
-                                                    echo ($query->num_rows() > 0 ? $query->num_rows() : 'No tasks');
+                                                    echo ($query->num_rows() > 0 ? $query->num_rows() : 'No todos');
                                                     ?>
                                                 </span></a> </h3> 
                                             <p><?= $list->list_body ?></p>

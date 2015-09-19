@@ -72,9 +72,6 @@ body {
     margin-left: 5px;
 }
 
-.navbar-top-links .dropdown-tasks {
-    margin-left: -59px;
-}
 
 .navbar-top-links .dropdown-alerts {
     margin-left: -123px;
@@ -361,4 +358,17 @@ table.dataTable thead .sorting:after {
 
 .form_edit_del form{
     padding-bottom: 5px;
+}
+
+
+.navbar-top-links .dropdown-tasks {
+    margin-left: -186px;
+}
+
+
+.TODO_action_area button{
+    margin-bottom: 5px;
+    padding: 3px;
+    float: right;
+        margin-right: 3px
 }

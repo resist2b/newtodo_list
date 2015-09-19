@@ -1,17 +1,9 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', TRUE);
-ini_set('display_startup_errors', TRUE);
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Users extends CI_Controller {
-
-    public function __construct() {
-        parent::__construct();
-        $this->load->model('User_M');
-    }
+class Users extends MY_Controller {
 
     public function index() {
         if (!($this->session->userdata('is_admin')) && $this->session->userdata('is_admin') != 1) {
@@ -24,24 +16,39 @@ class Users extends CI_Controller {
         if (!($this->session->userdata('is_admin')) && $this->session->userdata('is_admin') != 1) {
             redirect(base_url());
         }
-        $lists['users'] = $this->User_M->get_all();
-        $app['app_title'] = "Users";
-        $this->load->view('layouts/header', $app);
-        $this->load->view('users/show_users', $lists);
+
+        $this->data['users'] = $this->User_M->get_all();
+        /* load views */
+        $this->load->view('layouts/header', $this->data);
+        $this->load->view('users/show_users', $this->data);
+        $this->load->view('layouts/footer');
+    }
+
+    public function profile() {
+        $user_id = $this->session->userdata('id');
+        /* Get data from 3 tables using join */
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('users.id', $user_id);
+        $this->data['users'] = $this->db->get()->result();
+
+        /* load views */
+        $this->load->view('layouts/header', $this->data);
+        $this->load->view('users/user', $this->data);
         $this->load->view('layouts/footer');
     }
 
     public function add_new_user() {
-        $app['app_title'] = "Add New User";
+
         //get $lists
         //load form & passing $lists
-        $this->load->view('layouts/header', $app);
-        $this->load->view('users/add_user');
+        $this->load->view('layouts/header', $this->data);
+        $this->load->view('users/user');
         $this->load->view('layouts/footer');
     }
 
-    public function save_new_user() {
-        $data = [
+    public function saveUser() {
+        $this->data = [
             'first_name' => htmlspecialchars($this->input->post('first_name')),
             'last_name' => htmlspecialchars($this->input->post('last_name')),
             'email' => htmlspecialchars($this->input->post('email')),
@@ -52,19 +59,47 @@ class Users extends CI_Controller {
         ];
 
         $this->load->model('User_M');
-        $this->User_M->insert($data);
+        $this->User_M->insert($this->data);
         redirect('users/');
     }
 
+    public function updateUser() {
+
+        /* 1.validate */
+
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('first_name', 'first_name', 'required|strip_tagstrim|xxs_claen|max_length[50]|min_length[4]');
+        $this->form_validation->set_rules('last_name', 'last_name', 'required|strip_tagstrim|xxs_claen');
+        $this->form_validation->set_rules('email', 'email', 'required|strip_tagstrim|xxs_claen|trim|max_length[50]|min_length[8]|valid_email');
+        $this->form_validation->set_rules('username', 'username', 'required|strip_tagstrim|xxs_claen|trim|max_length[50]|min_length[5]|xxs_claen');
+        $this->form_validation->set_rules('password', 'Password', 'strip_tagstrim|xxs_claen|max_length[50]|min_length[5]');
+        $this->form_validation->set_rules('confirm_password', 'confirm_password', 'strip_tagstrim|xxs_claen|trim|matches[password]');
+        if ($this->form_validation->run() == FALSE) {
+            $this->profile();
+        } else {
+            /* update */
+            $data = [
+                'first_name' => htmlspecialchars($this->input->post('first_name')),
+                'last_name' => htmlspecialchars($this->input->post('last_name')),
+                'email' => htmlspecialchars($this->input->post('email')),
+                'username' => htmlspecialchars($this->input->post('username')),
+                'password' => htmlspecialchars(md5($this->input->post('password'))),
+            ];
+
+            $this->load->model('User_M');
+            $this->User_M->update($user_id = $this->session->userdata('id'), $data);
+            redirect('users/profile');
+        }
+    }
+
     public function data() {
-        $data['app_title'] = "New To-Do";
-        return $data;
+        return $this->data;
     }
 
     public function login() {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|max_length[50]|min_length[4]|xxs_claen');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|max_length[50]|min_length[4]|md5');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|xxs_claen');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|xxs_claen|md5');
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('reg/header', $this->data());
             $this->load->view('reg/login', $this->data());
@@ -72,16 +107,19 @@ class Users extends CI_Controller {
         } else {
             $query = $this->User_M->get_by(['username' => $this->input->post('username'), 'password' => $this->input->post('password')]);
             if (!($query)) {
-                echo "Sorry, The Username and password you entered don't match.";
+                redirect(base_url());
             } else {
                 $this->set_session();
-                redirect(base_url('home/dashboard/'));
+                redirect(base_url('home/'));
             }
         }
     }
 
     public function query() {
         $query = $this->User_M->get_by(['username' => $this->input->post('username'), 'password' => $this->input->post('password')]);
+
+
+
         return $query;
     }
 
@@ -98,12 +136,10 @@ class Users extends CI_Controller {
             'is_admin' => $query->is_admin,
         ];
         $this->session->set_userdata($user_data);
-        return $user_data;
     }
 
     public function unset_session() {
-        $user_data = $this->query();
-        $this->session->unset_userdata($user_data);
+        $this->session->unset_userdata($this->query());
     }
 
     public function logout() {

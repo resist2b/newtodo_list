@@ -110,7 +110,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('User_M');
+$autoload['model'] = array('User_M','Todo_M');
 
 /* End of file autoload.php */
 /* Location: ./application/config/autoload.php */

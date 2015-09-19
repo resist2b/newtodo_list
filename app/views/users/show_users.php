@@ -3,57 +3,46 @@
         <div class="col-lg-12">
             <h1 class="page-header"><?= $app_title ?></h1>
         </div>
-        <!-- /.col-lg-12 -->
     </div>
-    <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <div class="dataTable_wrapper">
-                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                            <thead>
-                                <tr>
-                                    <th>Full Name</th>
-                                    <th>email</th>
-                                    <th>username</th>
-                                    <th>reg_date</th>
-                                    <th>Admin/User</th>
-                                    <th>last Login</th>
+            <?php foreach ($users as $user) : ?>
+             <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($users as $user) : ?>
-                                    <!--loop-->
-                                    <tr class="odd gradeX">
-                                        <td><?= $user->first_name.' '.$user->last_name ?></td>
-                                        <td><?= $user->email ?></td>
-                                        <td><?= $user->username ?></td>
-                                        <td><?= $user->reg_date ?></td>
-                                        <td><span class="badge"><?= ($user->is_admin == 1 ? 'Admin' : 'User'); ?></span></td>
-                                        <td>date</td>
+<div class="col-lg-10 col-xs-7"><h3><?= $user->first_name.' '.$user->last_name ?></h3></div>
 
-                                    </tr>
-                                <?php endforeach; ?>
-                                <!--end loop-->
-                            </tbody>
-                        </table>
+<div class="col-lg-2 col-xs-5">  
+<div class="TODO_action_area pull-right">
+ <form action="http://localhost/newtodo/todos/action" method="post" accept-charset="utf-8"><div style="display:none">
+    <input type="hidden" name="csrf_test_name" value="3d42d42433b62103c70684e1431cdb68">
+ </div>                    <input type="hidden" name="todo_id" value="73">
+  <button title="Edit it" type="submit" name="action" value="edit" class=" btn btn-large btn-primary fa fa-edit"></button>
+            
+  
+                                        
+                                            </form>
+                                        </div>
 
+
+                                    </div>
+                               
+                            </div>
+
+                        </div>
+                        <div class="panel-body">
+                            <p><?= $user->email ?></p>
+                            <p><?= $user->username ?></p>
+                            <p><?= $user->reg_date ?></p>
+                            <span class="badge"><?= ($user->is_admin == 1 ? 'Admin' : 'User'); ?></span>
+                        </div>
                     </div>
-                    <!-- /.table-responsive -->
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
+             <?php endforeach; ?>
+            
         </div>
-        <!-- /.col-lg-12 -->
     </div>
 </div>
-<!-- /#page-wrapper -->
 
 
 

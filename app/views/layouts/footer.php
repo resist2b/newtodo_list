@@ -67,7 +67,7 @@ https://eonasdan.github.io/bootstrap-datetimepicker/
             $(function () {
                 $('#datetimepicker1').datetimepicker({
                     //Y-m-d h:i:s
-                    format: 'YYYY-MM-DD  h:mm'
+                    format: 'YYYY-MM-DD  H:mm'
                 });
             });
         </script>

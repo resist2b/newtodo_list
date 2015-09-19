@@ -11,23 +11,23 @@
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-5">
-            <?= form_open('tasks/save_task') ?>
+            <?= form_open('todos/save_todo') ?>
             <div class="form-group">
-                <label for="task_name"> task_name</label>
-                <input class="form-control" type="text" name="task_name" value="" id="task_name" placeholder="Enter task_name" />
+                <label for="todo_name"> todo_name</label>
+                <input class="form-control" type="text" name="todo_name" value="" id="todo_name" placeholder="Enter todo_name" />
             </div>
 
             <div class="form-group">
-                <label for="task_body"> task_body</label>
-                <textarea class="form-control" id="task_body" name="task_body" placeholder="Enter task_body" ></textarea>
+                <label for="todo_body"> todo_body</label>
+                <textarea class="form-control" id="todo_body" name="todo_body" placeholder="Enter todo_body" ></textarea>
             </div>
 
             <div class="form-group">
-                <label for="list_id">List</label>
-                <select class="form-control" name="list_id">
+                <label for="category_id">Category</label>
+                <select class="form-control" name="category_id">
                     <!--loop-->
-                    <?php foreach ($lists as $list) : ?>
-                        <option value="<?= $list->id ?>"> <?= $list->list_name ?></option>
+                    <?php foreach ($categories as $category) : ?>
+                        <option value="<?= $category->id ?>"> <?= $category->category_name ?></option>
 
                     <?php endforeach; ?>
                     <!--end loop-->
@@ -52,12 +52,12 @@
         <div class="col-lg-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Add List
+                    Add Category
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <!-- Button trigger modal -->
-                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#Task">Add List</button>
+                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#Task">Add Category</button>
                     <!-- Modal -->
                     <div class="modal fade" id="Task" tabindex="-1" role="dialog" aria-labelledby="TaskLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -67,20 +67,20 @@
                                     <h4 class="modal-title" id="TaskLabel">Add Task</h4>
                                 </div>
                                 <div class="modal-body">
-                                     <?= form_open('lists/save_list'); ?>
-                                                <label for="list_name"> list_name</label>
-                                                <input class="form-control" type="text" name="list_name" value="" id="task_name" placeholder="Enter list_name">
+                                     <?= form_open('categories/save_category'); ?>
+                                                <label for="category_name"> category_name</label>
+                                                <input class="form-control" type="text" name="category_name" value="" id="todo_name" placeholder="Enter category_name">
                                            
 
                                             <div class="form-group">
-                                                <label for="list_body"> list_body</label>
-                                                <textarea class="form-control" id="list_body" name="list_body" placeholder="Enter list_body"></textarea>
+                                                <label for="category_body"> category_body</label>
+                                                <textarea class="form-control" id="category_body" name="category_body" placeholder="Enter category_body"></textarea>
                                             </div>
 
 
                                             <div class="form-group">
-                                                <input  type="hidden" name="send_from"  value="tasks/add_new_task">
-                                                <button type="submit" name="submit" class="btn btn-large btn-success">Add List</button>
+                                                <input  type="hidden" name="send_from"  value="todos/add_new_todo">
+                                                <button type="submit" name="submit" class="btn btn-large btn-success">Add Category</button>
                                             </div>
                                             <?= form_close() ?>
                                 </div>
